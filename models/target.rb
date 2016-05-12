@@ -3,12 +3,13 @@ require_relative( '../db/sql_runner' )
 
 class Target
 
-  attr_accessor( :id, :name, :player_id )
+  attr_accessor( :id, :name, :player_id, :killed_date )
 
   def initialize( options )
     @id = options['id'].to_i
     @name = options['name']
     @player_id = options['player_id'].to_i
+    @killed_date = options ['killed_date']
   end
 
   def save()
@@ -17,6 +18,7 @@ class Target
     result = Target.new( target )
     return result
   end
+
 
 
   

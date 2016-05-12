@@ -5,7 +5,7 @@ require_relative( 'target' )
 
 class Player
 
-  attr_accessor( :id, :name)
+  attr_accessor( :id, :name, )
 
   def initialize(options)
     @id = options['id'].to_i
@@ -26,12 +26,58 @@ class Player
     return result
     end
 
-    def kills() # assumes that we are playing circle
+#    def kills() # assumes that we are playing circle
+#      killtime = Time.now.getutc
+#      sql = "UPDATE targets set killed_date = '#{killtime}' WHERE (targets.player_id = @id)"
+#      player = SqlRunner.run( sql ).first
+ #     sql = "Delete from players where player@id =
+      #result = Player.new( player )
+#      return 
+   # end
+
+
+
+    
+end
+
+
+    def list_players()
+      sql = "select * from players"
+      list_of_players = SqlRunner.run( sql)
+  #    result = list_of_players
+      array_of_h = list_of_players.map { |player| Player.new( player ) }
+          result =""
+      for ob in array_of_h
+    
+        result << " Player #{ob.id}  #{ob.name}
+"
+      end
+      result << "Total Players #{array_of_h.size}"
+      return result
+    end
+
+    def list_targets()
+      sql = "select * from targets"
+      list_of_targets = SqlRunner.run( sql)
+  #    result = list_of_players
+      array_of_h = list_of_targets.map { |target| Target.new( target ) }
+          result =""
+      for ob in array_of_h
+    
+        result << " Player #{ob.id}  #{ob.name} #{ob.killed_date}
+"
+      end
+      result << "Total Targets #{array_of_h.size}"
+      return result
+    end
+
+    def killed(player) # assumes that we are playing circle
       killtime = Time.now.getutc
-      sql = "UPDATE targets set killed_date = '#{killtime}' WHERE (targets.player_id = @id)"
-      player = SqlRunner.run( sql ).first 
+      sql = "UPDATE targets set killed_date = '#{killtime}' WHERE (targets.player_id = player)"
+#      player = SqlRunner.run( sql ).first
+ #     sql = "Delete from players where player@id =
       #result = Player.new( player )
       return 
     end
-    
-end
+
+
